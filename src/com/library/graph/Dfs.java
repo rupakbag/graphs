@@ -2,15 +2,21 @@ package com.library.graph;
 
 import java.util.ArrayList;
 import java.util.Set;
+/*
+* Running time complexity O(m + n) since it uses graph implemented as an adjacency list
+* Every entry in the adjacency list is visited only once to generate DFS
+* Weaker bound is O(n^2)
+* DFS generates connected component of the starting node
+*/
 
 public class Dfs<N extends Node> {
     private ArrayList<N> nodeOrder;
-    private Graph<N> dfsTree;
-    private Graph<N> graph;
+    private DirectedGraph<N> dfsTree;
+    private DirectedGraph<N> graph;
 
-    public Dfs(Graph<N> graph) {
+    public Dfs(DirectedGraph<N> graph) {
         this.graph = graph;
-        this.dfsTree = new Graph<>();
+        this.dfsTree = new DirectedGraph<>();
         this.nodeOrder = new ArrayList<>();
     }
 

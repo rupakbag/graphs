@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DfsTest {
-    private Graph<Node> graph = new Graph<>();
+    private DirectedGraph<Node> graph = new DirectedGraph<>();
     private Node n1 = Node.getInstance("n1");
     private Node n2 = Node.getInstance("n2");
     private Node n3 = Node.getInstance("n3");

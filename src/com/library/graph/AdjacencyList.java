@@ -1,7 +1,9 @@
 package com.library.graph;
 
 import java.util.*;
-
+/*
+*   Adjacency List requires space of O(m+n)
+ */
 public class AdjacencyList<N extends Node> {
     private HashMap<N, HashSet<N>> list;
 
@@ -26,7 +28,9 @@ public class AdjacencyList<N extends Node> {
         }
         return list.get(u).remove(v);
     }
-
+    public int size() {
+        return list == null ? 0 : list.size();
+    }
     public Set<N> getAdjNodeList(N u) {
         return list.get(u);
     }

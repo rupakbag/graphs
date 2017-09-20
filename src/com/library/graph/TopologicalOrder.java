@@ -1,11 +1,30 @@
 package com.library.graph;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-public class TopologicalOrder {
+public class TopologicalOrder<N extends Node> {
+    private DirectedGraph<N> graph;
+    private ArrayList<N> topologicalOrder;
+    private HashMap<Node, Integer> incomingEdgeCount;
 
-    // Find graph nodes with no incoming edges
-    // for each nodes removed node from adjacency list
-    // Add node to the output
+    public TopologicalOrder(DirectedGraph<N> graph) {
+        this.graph = graph;
+    }
 
+    public void generateTopologicalOrder() {
+        if (graph == null) return;
+        this.topologicalOrder = new ArrayList<>();
+        generateIncomingEdgeCount();
+    }
+
+    private void generateIncomingEdgeCount() {
+        this.incomingEdgeCount = new HashMap<>();
+        //TODO 
+
+    }
+
+    public String getTopologicalOrder() {
+        return "";
+    }
 }

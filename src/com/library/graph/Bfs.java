@@ -1,15 +1,20 @@
 package com.library.graph;
 
 import java.util.*;
-
+/*
+* Running time complexity O(m + n) since it uses graph implemented as an adjacency list
+* Every entry in the adjacency list is visited only once to generate BFS
+* Weaker bound is O(n^2)
+* BFS generates connected component of the starting node
+*/
 public class Bfs<N extends Node> {
-    private final Graph<N> graph;
-    private final Graph<N> bfsTree;
+    private final DirectedGraph<N> graph;
+    private final DirectedGraph<N> bfsTree;
     private final ArrayList<ArrayList<N>> bfsLevel;
 
-    public Bfs(Graph<N> graph) {
+    public Bfs(DirectedGraph<N> graph) {
         this.graph = graph;
-        this.bfsTree = new Graph<>();
+        this.bfsTree = new DirectedGraph<>();
         this.bfsLevel = new ArrayList<>();
     }
 
