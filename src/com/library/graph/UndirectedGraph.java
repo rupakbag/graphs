@@ -1,6 +1,6 @@
 package com.library.graph;
 
-public class UndirectedGraph<N extends Node> extends AdjacencyList<N> {
+public class UndirectedGraph<N extends Node, E extends Edge<N>> extends Graph<N, E> {
     @Override
     public boolean addEdge(N u, N v) {
         return super.addEdge(u,v) & super.addEdge(v,u);

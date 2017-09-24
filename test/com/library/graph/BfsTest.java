@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class BfsTest {
-    private DirectedGraph<Node> graph = new DirectedGraph<>();
+    private DirectedGraph<Node, Edge<Node>> graph = new DirectedGraph<>();
     private Node n1 = Node.getInstance("n1");
     private Node n2 = Node.getInstance("n2");
     private Node n3 = Node.getInstance("n3");
@@ -40,9 +40,9 @@ public class BfsTest {
 
     @Test
     public void printBfs() throws Exception {
-        Bfs<Node> bfs = new Bfs<>(graph);
+        Bfs<Node, Edge<Node>> bfs = new Bfs<>(graph);
         bfs.generateBfs(n1);
-        Assert.assertEquals("n2 n3", bfs.getBfsNodeListString(1));
+        Assert.assertEquals("[n2, n3]", bfs.getBfsNodeListString(1));
     }
 
 }

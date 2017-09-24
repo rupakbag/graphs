@@ -2,29 +2,40 @@ package com.library.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-public class TopologicalOrder<N extends Node> {
-    private DirectedGraph<N> graph;
+public class TopologicalOrder<N extends Node, E extends Edge<N>> {
+    private final DirectedGraph<N, E> graph;
     private ArrayList<N> topologicalOrder;
-    private HashMap<Node, Integer> incomingEdgeCount;
-
-    public TopologicalOrder(DirectedGraph<N> graph) {
+    private HashMap<N, Integer> incomingEdgeCount;
+    private DirectedGraph<N, E> revGraph;
+    public TopologicalOrder(DirectedGraph<N, E> graph) {
         this.graph = graph;
     }
 
     public void generateTopologicalOrder() {
         if (graph == null) return;
         this.topologicalOrder = new ArrayList<>();
-        generateIncomingEdgeCount();
+        this.revGraph = this.graph.reverse();
+
+        getIncomingEdgeCount();
+        for(Map.Entry<N, Integer> entry : this.incomingEdgeCount.entrySet()) {
+            if (entry.getValue() == Integer.valueOf(0)) {
+                this.topologicalOrder.add(entry.getKey());
+                this.incomingEdgeCount.remove(entry.getKey());
+            }
+        }
     }
 
-    private void generateIncomingEdgeCount() {
+    private void getIncomingEdgeCount() {
         this.incomingEdgeCount = new HashMap<>();
-        //TODO 
+
+        //TODO
 
     }
 
     public String getTopologicalOrder() {
-        return "";
+        generateTopologicalOrder();
+        return topologicalOrder.toString();
     }
 }

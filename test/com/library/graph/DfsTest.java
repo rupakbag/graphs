@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DfsTest {
-    private DirectedGraph<Node> graph = new DirectedGraph<>();
+    private DirectedGraph<Node, Edge<Node>> graph = new DirectedGraph<>();
     private Node n1 = Node.getInstance("n1");
     private Node n2 = Node.getInstance("n2");
     private Node n3 = Node.getInstance("n3");
@@ -40,7 +40,7 @@ public class DfsTest {
 
     @Test
     public void dfsNodeOrder(){
-        Dfs<Node> dfs = new Dfs<>(this.graph);
-        Assert.assertEquals("n1 n2 n4 n5 n6 n3 n7 n8", dfs.getDfsNodeOrder(n1));
+        Dfs<Node, Edge<Node>> dfs = new Dfs<>(this.graph);
+        Assert.assertEquals("[n1, n2, n4, n5, n6, n3, n7, n8]", dfs.getDfsNodeOrder(n1));
     }
 }

@@ -6,7 +6,6 @@ import java.util.*;
  */
 public class AdjacencyList<N extends Node> {
     private HashMap<N, HashSet<N>> list;
-
     public AdjacencyList(){
         this.list = new HashMap<>();
     }

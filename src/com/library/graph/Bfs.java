@@ -7,12 +7,12 @@ import java.util.*;
 * Weaker bound is O(n^2)
 * BFS generates connected component of the starting node
 */
-public class Bfs<N extends Node> {
-    private final DirectedGraph<N> graph;
-    private final DirectedGraph<N> bfsTree;
+public class Bfs<N extends Node, E extends Edge<N>> {
+    private final DirectedGraph<N, E> graph;
+    private final DirectedGraph<N, E> bfsTree;
     private final ArrayList<ArrayList<N>> bfsLevel;
 
-    public Bfs(DirectedGraph<N> graph) {
+    public Bfs(DirectedGraph<N, E> graph) {
         this.graph = graph;
         this.bfsTree = new DirectedGraph<>();
         this.bfsLevel = new ArrayList<>();
@@ -48,10 +48,7 @@ public class Bfs<N extends Node> {
         StringBuilder b = new StringBuilder();
         if (this.bfsLevel.isEmpty()) return "Empty Tree";
         for (ArrayList<N> list : this.bfsLevel) {
-            for (N n : list){
-                b.append(n.toString()).append(" ");
-            }
-            b.append("\n");
+            b.append(list.toString()).append("\n");
         }
         return b.toString();
     }
@@ -63,14 +60,6 @@ public class Bfs<N extends Node> {
 
     public String getBfsNodeListString(int level) {
         if (this.bfsLevel.size() < level) return null;
-        return getNodeListString(this.bfsLevel.get(level));
-    }
-
-    private String getNodeListString(ArrayList<N> list) {
-        StringBuilder b = new StringBuilder();
-        for (N n : list){
-            b.append(n.toString()).append(" ");
-        }
-        return b.toString().trim();
+        return this.bfsLevel.get(level).toString();
     }
 }
