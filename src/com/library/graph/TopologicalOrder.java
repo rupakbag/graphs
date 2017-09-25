@@ -2,6 +2,7 @@ package com.library.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class TopologicalOrder<N extends Node, E extends Edge<N>> {
@@ -18,6 +19,12 @@ public class TopologicalOrder<N extends Node, E extends Edge<N>> {
         this.topologicalOrder = new ArrayList<>();
         this.revGraph = this.graph.reverse();
 
+        Iterator<N> nodeIterator = this.revGraph.nodeIterator();
+        while (nodeIterator.hasNext()) {
+            N n = nodeIterator.next();
+            if (revGraph.getAdjNodeList(n).size() == 0) this.topologicalOrder.add(n);
+
+        }
         getIncomingEdgeCount();
         for(Map.Entry<N, Integer> entry : this.incomingEdgeCount.entrySet()) {
             if (entry.getValue() == Integer.valueOf(0)) {

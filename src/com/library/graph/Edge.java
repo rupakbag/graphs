@@ -10,4 +10,24 @@ public class Edge<N extends Node> {
         this.start = start;
         this.end = end;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Edge<?> edge = (Edge<?>) o;
+
+        if (directedEdge != edge.directedEdge) return false;
+        if (!start.equals(edge.start)) return false;
+        return end.equals(edge.end);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (directedEdge ? 1 : 0);
+        result = 31 * result + start.hashCode();
+        result = 31 * result + end.hashCode();
+        return result;
+    }
 }

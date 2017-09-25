@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> implements Iterable<E> {
+public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> {
     Set<N> v;
     Set<E> e;
 
@@ -33,6 +33,18 @@ public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> i
         return false;
     }
 
+    public  boolean removeEdge(N u, N v) {
+        if (super.removeEdge(u,v)) {
+//            e.remove();
+        }
+        return false;
+    }
+
+    public  boolean removeEdge(E edge) {
+        //TODO
+        return false;
+    }
+
     public DirectedGraph<N,E> reverse() {
         DirectedGraph<N, E> revGraph = new DirectedGraph<>();
         for (Edge<N> edge : e) {
@@ -41,8 +53,11 @@ public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> i
         return revGraph;
     }
 
-    @Override
-    public Iterator<E> iterator() {
+    public Iterator<E> edgeIterator() {
         return e == null? null : e.iterator();
+    }
+
+    public Iterator<N> nodeIterator() {
+        return e == null? null : v.iterator();
     }
 }
