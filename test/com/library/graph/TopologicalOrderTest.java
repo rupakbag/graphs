@@ -28,8 +28,9 @@ public class TopologicalOrderTest {
         graph.addEdge(n5, n7);
         graph.addEdge(n6, n7);
     }
+
     public void printTopologicalOrder() {
-        TopologicalOrder<Node> to = new TopologicalOrder(graph);
+        TopologicalOrder<Node, Edge<Node>> to = new TopologicalOrder(graph);
         Assert.assertEquals("n1 n2 n3 n4 n5 n6 n7", to.getTopologicalOrder());
     }
 }

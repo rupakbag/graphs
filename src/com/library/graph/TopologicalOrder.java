@@ -10,6 +10,7 @@ public class TopologicalOrder<N extends Node, E extends Edge<N>> {
     private ArrayList<N> topologicalOrder;
     private HashMap<N, Integer> incomingEdgeCount;
     private DirectedGraph<N, E> revGraph;
+    
     public TopologicalOrder(DirectedGraph<N, E> graph) {
         this.graph = graph;
     }

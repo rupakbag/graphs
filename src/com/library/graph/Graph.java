@@ -13,6 +13,10 @@ public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> {
         this.e = new HashSet<>();
     }
 
+    public void addNode(N u) {
+        this.v.add(u);
+    }
+
     public boolean addEdge(N u, N v) {
         if (super.addEdge(u, v)) {
             this.v.add(u);
@@ -58,6 +62,6 @@ public class Graph<N extends Node, E extends Edge<N>> extends AdjacencyList<N> {
     }
 
     public Iterator<N> nodeIterator() {
-        return e == null? null : v.iterator();
+        return v == null? null : v.iterator();
     }
 }
