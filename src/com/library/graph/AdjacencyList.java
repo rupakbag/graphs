@@ -10,7 +10,7 @@ public class AdjacencyList<N extends Node> {
         this.list = new HashMap<>();
     }
 
-    public boolean addEdge(N u, N v) {
+    protected boolean addEdge(N u, N v) {
         HashSet<N> list = this.list.get(u);
         if (list == null) {
             list = new HashSet<>();
@@ -19,7 +19,7 @@ public class AdjacencyList<N extends Node> {
         return list.add(v);
     }
 
-    public boolean removeEdge (N u, N v){
+    protected boolean removeEdge (N u, N v){
         if (!list.containsKey(u)) return false;
         if (v == null) {
             Set<N> s = list.remove(u);

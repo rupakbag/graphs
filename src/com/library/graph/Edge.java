@@ -30,4 +30,8 @@ public class Edge<N extends Node> {
         result = 31 * result + end.hashCode();
         return result;
     }
+
+    public Edge<N> reverse() {
+        return new Edge<>(true, end, start);
+    }
 }

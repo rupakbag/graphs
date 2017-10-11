@@ -35,10 +35,6 @@ public class Node {
 
     @Override
     public String toString() {
-//        final StringBuilder sb = new StringBuilder("Node{");
-//        sb.append("name='").append(name).append('\'');
-//        sb.append('}');
-//        return sb.toString();
         return name;
     }
 }
