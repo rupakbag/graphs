@@ -1,15 +1,15 @@
 <component name="libraryTable">
   <library name="C:\Users\rupak\Documents\ideaIC-2017.2.1\lib">
     <CLASSES>
-      <root url="file://C:" />
+      <root url="file://C:/" />
       <root url="file://$APPLICATION_HOME_DIR$/lib" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
       <root url="file://$APPLICATION_HOME_DIR$/lib" />
     </SOURCES>
-    <jarDirectory url="file://$APPLICATION_HOME_DIR$/lib" recursive="false" />
     <jarDirectory url="file://C:/" recursive="false" />
+    <jarDirectory url="file://$APPLICATION_HOME_DIR$/lib" recursive="false" />
     <jarDirectory url="file://$APPLICATION_HOME_DIR$/lib" recursive="false" type="SOURCES" />
   </library>
 </component>

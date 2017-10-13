@@ -8,33 +8,33 @@ import java.util.*;
 * BFS generates connected component of the starting node
 */
 public class Bfs<N extends Node, E extends Edge<N>> {
-    private final DirectedGraph<N, E> graph;
-    private final DirectedGraph<N, E> bfsTree;
-    private final ArrayList<ArrayList<N>> bfsLevel;
+    private final DirectedGraph graph;
+    private final DirectedGraph bfsTree;
+    private final ArrayList<ArrayList<Node>> bfsLevel;
 
-    public Bfs(DirectedGraph<N, E> graph) {
+    public Bfs(DirectedGraph graph) {
         this.graph = graph;
-        this.bfsTree = new DirectedGraph<>();
+        this.bfsTree = new DirectedGraph();
         this.bfsLevel = new ArrayList<>();
     }
 
     public void generateBfs(N start) {
-        ArrayList<N> list = new ArrayList<>();
+        ArrayList<Node> list = new ArrayList<>();
         list.add(start);
         this.bfsLevel.add(list);
         generateBfs(0);
     }
 
     private void generateBfs(int level) {
-        ArrayList<N> list = new ArrayList<>();
-        for (N node : this.bfsLevel.get(level)) {
-            Set<N> adjNodes = this.graph.getAdjNodeList(node);
+        ArrayList<Node> list = new ArrayList<>();
+        for (Node node : this.bfsLevel.get(level)) {
+            Set<Node> adjNodes = this.graph.getAdjNodeList(node);
             if (adjNodes == null) continue;
-            for (N adjNode : adjNodes) {
+            for (Node adjNode : adjNodes) {
                 if (adjNode.visited) continue;
                 adjNode.visited = true;
                 list.add(adjNode);
-                this.bfsTree.addEdge(node, adjNode);
+                this.bfsTree.addEdge(new Edge(node, adjNode));
             }
         }
         if (list.size() > 0) {
@@ -47,7 +47,7 @@ public class Bfs<N extends Node, E extends Edge<N>> {
     public String printBfs() {
         StringBuilder b = new StringBuilder();
         if (this.bfsLevel.isEmpty()) return "Empty Tree";
-        for (ArrayList<N> list : this.bfsLevel) {
+        for (ArrayList<Node> list : this.bfsLevel) {
             b.append(list.toString()).append("\n");
         }
         return b.toString();

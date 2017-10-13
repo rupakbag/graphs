@@ -1,45 +1,44 @@
 package com.library.graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
-public class TopologicalOrder<N extends Node, E extends Edge<N>> {
-    private final DirectedGraph<N, E> graph;
-    private ArrayList<N> topologicalOrder;
-    private HashMap<N, Integer> incomingEdgeCount;
-    private DirectedGraph<N, E> revGraph;
-    
-    public TopologicalOrder(DirectedGraph<N, E> graph) {
+public class TopologicalOrder {
+    private final DirectedGraph graph;
+    private ArrayList<Node> topologicalOrder;
+    private HashMap<Node, Integer> incomingEdgeCount;
+    private Queue<Node> active;
+
+    public TopologicalOrder(DirectedGraph graph) {
         this.graph = graph;
+        active = new LinkedList<Node>();
     }
 
     public void generateTopologicalOrder() {
         if (graph == null) return;
         this.topologicalOrder = new ArrayList<>();
-        this.revGraph = this.graph.reverse();
-
-        Iterator<N> nodeIterator = this.revGraph.nodeIterator();
-        while (nodeIterator.hasNext()) {
-            N n = nodeIterator.next();
-            if (revGraph.getAdjNodeList(n).size() == 0) this.topologicalOrder.add(n);
-
+        for (Edge e : graph.e) {
+            e.end.incomingEdgeCount++;
         }
-        getIncomingEdgeCount();
-        for(Map.Entry<N, Integer> entry : this.incomingEdgeCount.entrySet()) {
-            if (entry.getValue() == Integer.valueOf(0)) {
-                this.topologicalOrder.add(entry.getKey());
-                this.incomingEdgeCount.remove(entry.getKey());
-            }
-        }
+        getActiveNodes();
+        processActiveNodes();
+        System.out.println(topologicalOrder.toString());
     }
 
-    private void getIncomingEdgeCount() {
-        this.incomingEdgeCount = new HashMap<>();
+    private void processActiveNodes() {
+        if (active.isEmpty()) return;
+        Node n = active.remove();
+        topologicalOrder.add(n);
+        graph.removeNode(n);
+        getActiveNodes();
+        processActiveNodes();
+    }
 
-        //TODO
-
+    private void getActiveNodes() {
+        for (Node n : graph.v) {
+            if (n.incomingEdgeCount == 0) {
+                active.add(n);
+            }
+        }
     }
 
     public String getTopologicalOrder() {

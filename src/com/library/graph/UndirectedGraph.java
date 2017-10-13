@@ -1,12 +1,11 @@
 package com.library.graph;
 
-public class UndirectedGraph<N extends Node, E extends Edge<N>> extends Graph<N, E> {
-    @Override
-    public boolean addEdge(E edge) { return super.addEdge(edge) & super.addEdge((E)edge.reverse());
-    }
+public class UndirectedGraph extends Graph<Node, Edge<Node>> {
+
+    //TODO Implement Add/remove edge
 
     @Override
-    public boolean removeEdge (E edge){
-        return super.removeEdge(edge) & super.removeEdge((E)edge.reverse());
+    public UndirectedGraph reverse() {
+        return this;
     }
 }

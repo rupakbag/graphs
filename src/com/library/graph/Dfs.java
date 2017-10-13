@@ -9,31 +9,31 @@ import java.util.Set;
 * DFS generates connected component of the starting node
 */
 
-public class Dfs<N extends Node, E extends Edge<N>> {
-    private ArrayList<N> nodeOrder;
-    private DirectedGraph<N, E> dfsTree;
-    private DirectedGraph<N, E> graph;
+public class Dfs {
+    private ArrayList<Node> nodeOrder;
+    private DirectedGraph dfsTree;
+    private DirectedGraph graph;
 
-    public Dfs(DirectedGraph<N, E> graph) {
+    public Dfs(DirectedGraph graph) {
         this.graph = graph;
-        this.dfsTree = new DirectedGraph<>();
+        this.dfsTree = new DirectedGraph();
         this.nodeOrder = new ArrayList<>();
     }
 
-    public void generateDfs(N start) {
+    public void generateDfs(Node start) {
         start.visited = true;
         this.nodeOrder.add(start);
-        Set<N> adjNodes = graph.getAdjNodeList(start);
+        Set<Node> adjNodes = graph.getAdjNodeList(start);
         if (adjNodes == null) return;
-        for (N n : adjNodes) {
+        for (Node n : adjNodes) {
             if (!n.visited) {
-                this.dfsTree.addEdge(start, n);
+                this.dfsTree.addEdge(new Edge<>(start, n));
                 generateDfs(n);
             }
         }
     }
 
-    public String getDfsNodeOrder(N start) {
+    public String getDfsNodeOrder(Node start) {
         generateDfs(start);
         return this.nodeOrder.toString();
     }
