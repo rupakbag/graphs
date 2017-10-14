@@ -16,9 +16,7 @@ public class TopologicalOrder {
     public void generateTopologicalOrder() {
         if (graph == null) return;
         this.topologicalOrder = new ArrayList<>();
-        for (Edge e : graph.e) {
-            e.end.incomingEdgeCount++;
-        }
+
         getActiveNodes();
         processActiveNodes();
         System.out.println(topologicalOrder.toString());
@@ -35,8 +33,9 @@ public class TopologicalOrder {
 
     private void getActiveNodes() {
         for (Node n : graph.v) {
-            if (n.incomingEdgeCount == 0) {
+            if (n.incomingEdgeCount == 0 && !n.visited) {
                 active.add(n);
+                n.visited = true;
             }
         }
     }
