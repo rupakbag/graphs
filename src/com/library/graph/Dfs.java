@@ -27,7 +27,7 @@ public class Dfs {
         if (adjNodes == null) return;
         for (Node n : adjNodes) {
             if (!n.visited) {
-                this.dfsTree.addEdge(new Edge<>(start, n));
+                this.dfsTree.addEdge(Edge.getInstance(start, n));
                 generateDfs(n);
             }
         }

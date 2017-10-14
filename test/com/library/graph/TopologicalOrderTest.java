@@ -16,18 +16,18 @@ public class TopologicalOrderTest {
 
     @Before
     public void setUp() throws Exception {
-        graph.addEdge(new Edge<>(n1, n4));
-        graph.addEdge(new Edge<>(n1, n5));
-        graph.addEdge(new Edge<>(n1, n7));
-        graph.addEdge(new Edge<>(n2, n6));
-        graph.addEdge(new Edge<>(n2, n5));
-        graph.addEdge(new Edge<>(n2, n3));
-        graph.addEdge(new Edge<>(n3, n4));
-        graph.addEdge(new Edge<>(n3, n5));
-        graph.addEdge(new Edge<>(n4, n5));
-        graph.addEdge(new Edge<>(n5, n6));
-        graph.addEdge(new Edge<>(n5, n7));
-        graph.addEdge(new Edge<>(n6, n7));
+//        graph.addEdge(new Edge<>(n1, n4));
+//        graph.addEdge(new Edge<>(n1, n5));
+//        graph.addEdge(new Edge<>(n1, n7));
+//        graph.addEdge(new Edge<>(n2, n6));
+//        graph.addEdge(new Edge<>(n2, n5));
+//        graph.addEdge(new Edge<>(n2, n3));
+//        graph.addEdge(new Edge<>(n3, n4));
+//        graph.addEdge(new Edge<>(n3, n5));
+//        graph.addEdge(new Edge<>(n4, n5));
+//        graph.addEdge(new Edge<>(n5, n6));
+//        graph.addEdge(new Edge<>(n5, n7));
+//        graph.addEdge(new Edge<>(n6, n7));
     }
 
     @Test

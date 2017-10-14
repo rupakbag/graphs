@@ -40,7 +40,7 @@ public class BfsTest {
 
     @Test
     public void printBfs() throws Exception {
-        Bfs<Node, Edge<Node>> bfs = new Bfs<>(graph);
+        Bfs bfs = new Bfs(graph);
 //        bfs.generateBfs(n1);
         Assert.assertEquals("[n2, n3]", bfs.getBfsNodeListString(1));
     }

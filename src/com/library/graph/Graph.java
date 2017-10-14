@@ -5,12 +5,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public abstract class Graph<N extends Node, E extends Edge<N>> {
-    Set<N> v;
-    Set<E> e;
-    AdjacencyList<N> adjList;
-
-    public abstract Graph<N,E> reverse();
+public class Graph{
+    Set<Node> v;
+    Set<Edge> e;
+    AdjacencyList adjList;
 
     public Graph() {
         this.v = new HashSet<>();
@@ -18,30 +16,39 @@ public abstract class Graph<N extends Node, E extends Edge<N>> {
         this.adjList = new AdjacencyList<>();
     }
 
-    public void addNode(N u) {
+    public Graph addNode(Node u) {
         this.v.add(u);
+        return this;
     }
 
-    public void removeNode(N u) {
-        Iterator<E> iterator = e.iterator();
-        while (iterator.hasNext()){
-            E edge = iterator.next();
-            if (edge.start.equals(u) || edge.end.equals(u)) {
-                removeEdge(edge);
-            }
-        }
-    }
-
-    public void addEdge(E edge) {
+    public void addEdge(Edge edge) {
         if (!e.contains(edge)) {
             this.adjList.addEdge(edge.start, edge.end);
             this.v.add(edge.start);
             this.v.add(edge.end);
             this.e.add(edge);
+            edge.end.incomingEdgeCount++;
         }
     }
 
-    public  boolean removeEdge(E edge) {
+    public void removeNode(Node u) {
+        if (!v.contains(u)) return;
+
+        Iterator<Edge> iterator = e.iterator();
+        while (iterator.hasNext()){
+            Edge edge = iterator.next();
+            if (edge.start.equals(u) || edge.end.equals(u)) {
+                iterator.remove();
+                edge.end.incomingEdgeCount--;
+                adjList.removeEdge(edge.start, edge.end);
+            }
+        }
+        if (u.incomingEdgeCount == 0 && adjList.getAdjNodeList(u) == null) {
+            v.remove(u);
+        }
+    }
+
+    public  boolean removeEdge(Edge edge) {
         if (edge != null && e.remove(edge)) {
             edge.end.incomingEdgeCount--;
             adjList.removeEdge(edge.start, edge.end);
@@ -50,24 +57,25 @@ public abstract class Graph<N extends Node, E extends Edge<N>> {
         return false;
     }
 
-    public Iterator<E> edgeIterator() {
+    public Iterator<Edge> edgeIterator() {
         return e == null? null : e.iterator();
     }
 
-    public Iterator<N> nodeIterator() {
+    public Iterator<Node> nodeIterator() {
         return v == null? null : v.iterator();
     }
-    public Set<N> getAdjNodeList(N u) {
+    public Set<Node> getAdjNodeList(Node u) {
         return adjList.getAdjNodeList(u);
     }
 
-    private class AdjacencyList<N extends Node> {
+    public class AdjacencyList<N extends Node> {
         private HashMap<N, HashSet<N>> list;
+
         public AdjacencyList(){
             this.list = new HashMap<>();
         }
 
-        protected boolean addEdge(N u, N v) {
+        boolean addEdge(N u, N v) {
             HashSet<N> list = this.list.get(u);
             if (list == null) {
                 list = new HashSet<>();
@@ -76,17 +84,19 @@ public abstract class Graph<N extends Node, E extends Edge<N>> {
             return list.add(v);
         }
 
-        protected boolean removeEdge (N u, N v){
-            if (!list.containsKey(u)) return false;
-            if (v == null) {
-                Set<N> s = list.remove(u);
-                return s == null? false : s.size() > 0;
+        void removeNode(N n) {
+            list.remove(n);
+        }
+
+        boolean removeEdge (N u, N v){
+            if (u == null || v == null || !list.containsKey(u)) return false;
+            boolean success = list.get(u).remove(v);
+            if (success && list.get(u).size() == 0) {
+                list.remove(u);
             }
-            return list.get(u).remove(v);
+            return success;
         }
-        public int size() {
-            return list == null ? 0 : list.size();
-        }
+
         public Set<N> getAdjNodeList(N u) {
             return list.get(u);
         }

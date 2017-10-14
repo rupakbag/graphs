@@ -7,7 +7,7 @@ import java.util.*;
 * Weaker bound is O(n^2)
 * BFS generates connected component of the starting node
 */
-public class Bfs<N extends Node, E extends Edge<N>> {
+public class Bfs {
     private final DirectedGraph graph;
     private final DirectedGraph bfsTree;
     private final ArrayList<ArrayList<Node>> bfsLevel;
@@ -18,7 +18,7 @@ public class Bfs<N extends Node, E extends Edge<N>> {
         this.bfsLevel = new ArrayList<>();
     }
 
-    public void generateBfs(N start) {
+    public void generateBfs(Node start) {
         ArrayList<Node> list = new ArrayList<>();
         list.add(start);
         this.bfsLevel.add(list);
@@ -34,7 +34,7 @@ public class Bfs<N extends Node, E extends Edge<N>> {
                 if (adjNode.visited) continue;
                 adjNode.visited = true;
                 list.add(adjNode);
-                this.bfsTree.addEdge(new Edge(node, adjNode));
+                this.bfsTree.addEdge(Edge.getInstance(node, adjNode));
             }
         }
         if (list.size() > 0) {
@@ -53,7 +53,7 @@ public class Bfs<N extends Node, E extends Edge<N>> {
         return b.toString();
     }
 
-    public void printBfs(N start) {
+    public void printBfs(Node start) {
         generateBfs(start);
         System.out.println(printBfs());
     }

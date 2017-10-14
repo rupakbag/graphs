@@ -1,12 +1,29 @@
 package com.library.graph;
 
-public class Edge<N extends Node> {
-    N start;
-    N end;
+import java.util.HashMap;
 
-    public Edge(N start, N end) {
+public class Edge {
+    final Node start;
+    final Node end;
+
+    private static HashMap<Integer, Edge> edgePool = new HashMap<>();
+    public static Edge getInstance(Node start, Node end) {
+        Integer key = Integer.valueOf(start.hashCode()*31 + end.hashCode());
+        Edge e = edgePool.get(key);
+        if (e == null) {
+            e = new Edge(start, end);
+            edgePool.put(key, e);
+        }
+        return e;
+    }
+
+    private Edge(Node start, Node end) {
         this.start = start;
         this.end = end;
+    }
+
+    public Edge reverse() {
+        return new Edge(end, start);
     }
 
     @Override
@@ -14,7 +31,7 @@ public class Edge<N extends Node> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Edge<?> edge = (Edge<?>) o;
+        Edge edge = (Edge) o;
 
         if (!start.equals(edge.start)) return false;
         return end.equals(edge.end);
@@ -27,7 +44,12 @@ public class Edge<N extends Node> {
         return result;
     }
 
-    public Edge<N> reverse() {
-        return new Edge<N>(end, start);
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append(start)
+                .append(" -> ")
+                .append(end);
+        return sb.toString();
     }
 }
