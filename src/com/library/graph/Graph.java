@@ -64,10 +64,17 @@ public class Graph{
     public Iterator<Node> nodeIterator() {
         return v == null? null : v.iterator();
     }
+
     public Set<Node> getAdjNodeList(Node u) {
         return adjList.getAdjNodeList(u);
     }
 
+    public void clear() {
+        this.v.clear();
+        this.e.clear();
+        this.adjList.list.clear();
+    }
+    
     public class AdjacencyList<N extends Node> {
         private HashMap<N, HashSet<N>> list;
 
@@ -84,10 +91,6 @@ public class Graph{
             return list.add(v);
         }
 
-        void removeNode(N n) {
-            list.remove(n);
-        }
-
         boolean removeEdge (N u, N v){
             if (u == null || v == null || !list.containsKey(u)) return false;
             boolean success = list.get(u).remove(v);
@@ -95,6 +98,10 @@ public class Graph{
                 list.remove(u);
             }
             return success;
+        }
+
+        void removeNode(N n) {
+            list.remove(n);
         }
 
         public Set<N> getAdjNodeList(N u) {

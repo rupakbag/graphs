@@ -19,6 +19,7 @@ public class Bfs {
     }
 
     public void generateBfs(Node start) {
+        this.bfsLevel.clear();
         ArrayList<Node> list = new ArrayList<>();
         list.add(start);
         this.bfsLevel.add(list);
@@ -59,7 +60,7 @@ public class Bfs {
     }
 
     public String getBfsNodeListString(int level) {
-        if (this.bfsLevel.size() < level) return null;
+        if (this.bfsLevel.size() <= level) return null;
         return this.bfsLevel.get(level).toString();
     }
 }

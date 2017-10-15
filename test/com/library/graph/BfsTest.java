@@ -6,43 +6,50 @@ import org.junit.Test;
 
 public class BfsTest {
     private DirectedGraph graph = new DirectedGraph();
-//    private Node n1 = Node.getInstance("n1");
-//    private Node n2 = Node.getInstance("n2");
-//    private Node n3 = Node.getInstance("n3");
-//    private Node n4 = Node.getInstance("n4");
-//    private Node n5 = Node.getInstance("n5");
-//    private Node n6 = Node.getInstance("n6");
-//    private Node n7 = Node.getInstance("n7");
-//    private Node n8 = Node.getInstance("n8");
-//    private Node n9 = Node.getInstance("n9");
-//    private Node n10 = Node.getInstance("n10");
-//    private Node n11 = Node.getInstance("n11");
-//    private Node n12 = Node.getInstance("n12");
-//    private Node n13 = Node.getInstance("n13");
+    private Node n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13;
 
     @Before
     public void setup() {
-//        graph.addEdge(n1, n2);
-//        graph.addEdge(n1, n3);
-//        graph.addEdge(n2, n3);
-//        graph.addEdge(n2, n4);
-//        graph.addEdge(n2, n5);
-//        graph.addEdge(n4, n5);
-//        graph.addEdge(n3, n5);
-//        graph.addEdge(n3, n7);
-//        graph.addEdge(n3, n8);
-//        graph.addEdge(n7, n8);
-//        graph.addEdge(n5, n6);
-//        graph.addEdge(n9, n10);
-//        graph.addEdge(n11, n12);
-//        graph.addEdge(n12, n13);
+        n1 = new Node("n1");
+        n2 = new Node("n2");
+        n3 = new Node("n3");
+        n4 = new Node("n4");
+        n5 = new Node("n5");
+        n6 = new Node("n6");
+        n7 = new Node("n7");
+        n8 = new Node("n8");
+        n9 = new Node("n9");
+        n10 = new Node("n10");
+        n11 = new Node("n11");
+        n12 = new Node("n12");
+        n13 = new Node("n13");
+        graph.addEdge(Edge.getInstance(n1, n2));
+        graph.addEdge(Edge.getInstance(n1, n3));
+        graph.addEdge(Edge.getInstance(n2, n3));
+        graph.addEdge(Edge.getInstance(n2, n4));
+        graph.addEdge(Edge.getInstance(n2, n5));
+        graph.addEdge(Edge.getInstance(n4, n5));
+        graph.addEdge(Edge.getInstance(n3, n5));
+        graph.addEdge(Edge.getInstance(n3, n7));
+        graph.addEdge(Edge.getInstance(n3, n8));
+        graph.addEdge(Edge.getInstance(n7, n8));
+        graph.addEdge(Edge.getInstance(n5, n6));
+        graph.addEdge(Edge.getInstance(n9, n10));
+        graph.addEdge(Edge.getInstance(n11, n12));
+        graph.addEdge(Edge.getInstance(n12, n13));
     }
 
     @Test
     public void printBfs() throws Exception {
         Bfs bfs = new Bfs(graph);
-//        bfs.generateBfs(n1);
+        bfs.generateBfs(n1);
         Assert.assertEquals("[n2, n3]", bfs.getBfsNodeListString(1));
+        Assert.assertEquals("[n4, n5, n7, n8]", bfs.getBfsNodeListString(2));
+        Assert.assertEquals("[n6]", bfs.getBfsNodeListString(3));
+        Assert.assertEquals(null, bfs.getBfsNodeListString(4));
+
+        bfs.generateBfs(n3);
+        Assert.assertEquals("[n7, n8]", bfs.getBfsNodeListString(1));
     }
 
 }
