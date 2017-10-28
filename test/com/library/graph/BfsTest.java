@@ -10,19 +10,19 @@ public class BfsTest {
 
     @Before
     public void setup() {
-        n1 = new Node("n1");
-        n2 = new Node("n2");
-        n3 = new Node("n3");
-        n4 = new Node("n4");
-        n5 = new Node("n5");
-        n6 = new Node("n6");
-        n7 = new Node("n7");
-        n8 = new Node("n8");
-        n9 = new Node("n9");
-        n10 = new Node("n10");
-        n11 = new Node("n11");
-        n12 = new Node("n12");
-        n13 = new Node("n13");
+        n1 = Node.getInstance("n1");
+        n2 = Node.getInstance("n2");
+        n3 = Node.getInstance("n3");
+        n4 = Node.getInstance("n4");
+        n5 = Node.getInstance("n5");
+        n6 = Node.getInstance("n6");
+        n7 = Node.getInstance("n7");
+        n8 = Node.getInstance("n8");
+        n9 = Node.getInstance("n9");
+        n10 = Node.getInstance("n10");
+        n11 = Node.getInstance("n11");
+        n12 = Node.getInstance("n12");
+        n13 = Node.getInstance("n13");
         graph.addEdge(Edge.getInstance(n1, n2));
         graph.addEdge(Edge.getInstance(n1, n3));
         graph.addEdge(Edge.getInstance(n2, n3));
@@ -47,9 +47,6 @@ public class BfsTest {
         Assert.assertEquals("[n4, n5, n7, n8]", bfs.getBfsNodeListString(2));
         Assert.assertEquals("[n6]", bfs.getBfsNodeListString(3));
         Assert.assertEquals(null, bfs.getBfsNodeListString(4));
-
-        bfs.generateBfs(n3);
-        Assert.assertEquals("[n7, n8]", bfs.getBfsNodeListString(1));
     }
 
 }

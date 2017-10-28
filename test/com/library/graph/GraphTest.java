@@ -6,18 +6,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class GraphTest {
-    private Graph g = new Graph();
+    private Graph g;;
     private Node n1,n2,n3,n4,n5,n6,n7;
 
     @Before
     public void setUp() throws Exception {
-        n1 = new Node("n1");
-        n2 = new Node("n2");
-        n3 = new Node("n3");
-        n4 = new Node("n4");
-        n5 = new Node("n5");
-        n6 = new Node("n6");
-        n7 = new Node("n7");
+        g = new Graph();
+        n1 = Node.getInstance("n1");
+        n2 = Node.getInstance("n2");
+        n3 = Node.getInstance("n3");
+        n4 = Node.getInstance("n4");
+        n5 = Node.getInstance("n5");
+        n6 = Node.getInstance("n6");
+        n7 = Node.getInstance("n7");
     }
 
     @Test

@@ -8,7 +8,7 @@ import java.util.Set;
 public class Graph{
     Set<Node> v;
     Set<Edge> e;
-    AdjacencyList adjList;
+    AdjacencyList<Node> adjList;
 
     public Graph() {
         this.v = new HashSet<>();
@@ -75,15 +75,15 @@ public class Graph{
         this.adjList.list.clear();
     }
     
-    public class AdjacencyList<N extends Node> {
-        private HashMap<N, HashSet<N>> list;
+    public class AdjacencyList<Node> {
+        private HashMap<Node, HashSet<Node>> list;
 
         public AdjacencyList(){
             this.list = new HashMap<>();
         }
 
-        boolean addEdge(N u, N v) {
-            HashSet<N> list = this.list.get(u);
+        boolean addEdge(Node u, Node v) {
+            HashSet<Node> list = this.list.get(u);
             if (list == null) {
                 list = new HashSet<>();
                 this.list.put(u, list);
@@ -91,7 +91,7 @@ public class Graph{
             return list.add(v);
         }
 
-        boolean removeEdge (N u, N v){
+        boolean removeEdge (Node u, Node v){
             if (u == null || v == null || !list.containsKey(u)) return false;
             boolean success = list.get(u).remove(v);
             if (success && list.get(u).size() == 0) {
@@ -100,11 +100,11 @@ public class Graph{
             return success;
         }
 
-        void removeNode(N n) {
+        void removeNode(Node n) {
             list.remove(n);
         }
 
-        public Set<N> getAdjNodeList(N u) {
+        public HashSet<Node> getAdjNodeList(Node u) {
             return list.get(u);
         }
     }

@@ -7,19 +7,15 @@ public class Edge {
     final Node end;
 
     private static HashMap<Integer, Edge> edgePool = new HashMap<>();
-    public static Edge getInstance(Node start, Node end) {
-        Integer key = Integer.valueOf(start.hashCode()*31 + end.hashCode());
-        Edge e = edgePool.get(key);
-        if (e == null) {
-            e = new Edge(start, end);
-            edgePool.put(key, e);
-        }
-        return e;
-    }
 
     private Edge(Node start, Node end) {
         this.start = start;
         this.end = end;
+    }
+
+    public static Edge getInstance(Node start, Node end) {
+        Integer key = Integer.valueOf(start.hashCode()*31 + end.hashCode());
+        return edgePool.computeIfAbsent(key, k -> new Edge(start, end));
     }
 
     public Edge reverse() {
