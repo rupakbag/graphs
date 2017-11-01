@@ -5,18 +5,18 @@ import java.util.Map;
 
 public class Node {
     final String name;
+
     final int nodeId;
     int incomingEdgeCount = 0;
     boolean visited;
-
     private static Map<String, Node> nodeCache = new HashMap<>();
 
     private static IdGenerator g = IdGenerator.getInstance();
+
     private Node(String name) {
         this.nodeId = g.getNextId();
         this.name = name;
     }
-
     public static Node getInstance(String nodeName) {
         Node n = nodeCache.computeIfAbsent(nodeName, k -> new Node(k));
         return n.clear();
@@ -50,4 +50,7 @@ public class Node {
     public String toString() {
         return name;
     }
+
+    public String getName() { return name; }
+    public int getNodeId() { return nodeId; }
 }

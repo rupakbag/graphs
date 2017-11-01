@@ -1,5 +1,6 @@
 package com.library.sort;
 
+import com.library.graph.Node;
 import org.junit.Test;
 
 public class MergeSortTest {
@@ -20,6 +21,16 @@ public class MergeSortTest {
         MergeSort.merge(s1,s2,s3);
         for (Integer i : s3) {
             System.out.println(i);
+        }
+    }
+
+    @Test
+    public void test_Comparator_Merge_Sort() {
+        Node[] nodes = new Node[]{Node.getInstance("n2"), Node.getInstance("n3"), Node.getInstance("n1")};
+
+        MergeSort.sort(nodes, (o1,o2) -> o1.getName().compareTo(o2.getName()));
+        for (Node n : nodes) {
+            System.out.println(n);
         }
     }
 }
