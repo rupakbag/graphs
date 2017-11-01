@@ -2,7 +2,7 @@ package com.library.utils;
 
 import java.util.LinkedList;
 
-public abstract class ObjectPool<T> {
+public abstract class ObjectPool<T extends allowPooling<T>> {
     private LinkedList<T> free;
     protected abstract T create();
     protected abstract boolean validObject(T t);
@@ -20,6 +20,7 @@ public abstract class ObjectPool<T> {
 
     public void returnInstance(T t) {
         if (validObject(t)) {
+            t.clear();
             this.free.add(t);
         }
     }
