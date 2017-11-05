@@ -8,11 +8,14 @@ import java.util.List;
 /*
 *  We have n jobs labelled 1...n, with each job specifying start time, finish time and value/weight
 *  Goal is to find a subset of mutually exclusive jobs that maximises the sum of the values of the selected jobs
+*  O(n) algorithm using Memoization
 */
 
-public class WeightedIntervalSchedule {
-    private List<JOB> jobList = new ArrayList<>(); // Consider using sortset
+public class WeightedJobSchedule {
+    private static int UNKNOWN = 0;
+    private List<JOB> jobList = new ArrayList<>();
     private int[] optValues;
+
     public boolean addJob(JOB j) {
         if (JOB.valid(j)) {
             return jobList.add(j);
@@ -23,17 +26,17 @@ public class WeightedIntervalSchedule {
     public int getOpt() {
         Collections.sort(jobList);
         optValues = new int[jobList.size()];
-        Arrays.fill(optValues, 0);
+        Arrays.fill(optValues, UNKNOWN);
         int ret = _opt(jobList.size() - 1);
-        printOpt(jobList.size() - 1);
+        printOptimalJob(jobList.size() - 1);
         return ret;
     }
 
     private int _opt(int j) {
         if (j == -1) return 0;
-        if (optValues[j] != 0) return optValues[j];
-
-        optValues[j] = Math.max(jobList.get(j).w  + _opt(p(j)), _opt(j - 1));
+        if (optValues[j] == UNKNOWN) {
+            optValues[j] = Math.max(jobList.get(j).w  + _opt(p(j)), _opt(j - 1));
+        }
         return optValues[j];
     }
 
@@ -45,21 +48,20 @@ public class WeightedIntervalSchedule {
         return -1;
     }
 
-    private void printOpt(int j) {
+    private void printOptimalJob(int j) {
         if (j == -1) return;
-        if (j == 0) {
-            System.out.println(jobList.get(0));
-            return;
-        }
 
-        int optDisjoint = p(j) >= 0 ? optValues[p(j)] : 0;
-        if (jobList.get(j).w + optDisjoint >= optValues[j - 1]) {
+        if (jobList.get(j).w + getOptValue(p(j)) >= getOptValue(j - 1)) {
             System.out.println(jobList.get(j));
-            printOpt(p(j));
+            printOptimalJob(p(j));
         }
         else {
-            printOpt(j - 1);
+            printOptimalJob(j - 1);
         }
+    }
+
+    private int getOptValue(int j) {
+        return (j == -1)? 0 : optValues[j];
     }
 
     public static class JOB implements Comparable<JOB>{
@@ -88,31 +90,6 @@ public class WeightedIntervalSchedule {
             if (f == o.f) return 0;
             if (f < o.f) return -1;
             else return 1;
-        }
-
-        /*
-        *   Equivalence is based on start time, end time and weight
-        *   Two jobs with same start and end time and weight cannot exist
-        *   If this criteria doesn't hold, add an id generator to the JOB class
-         */
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            JOB job = (JOB) o;
-
-            if (s != job.s) return false;
-            if (f != job.f) return false;
-            return w == job.w;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = s;
-            result = 31 * result + f;
-            result = 31 * result + w;
-            return result;
         }
 
         @Override
