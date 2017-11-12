@@ -12,7 +12,7 @@ import java.util.List;
 */
 
 public class WeightedJobSchedule {
-    private static int UNKNOWN = 0;
+    private static final int UNKNOWN = 0;
     private List<JOB> jobList = new ArrayList<>();
     private int[] optValues;
 
