@@ -13,20 +13,33 @@ public class KnapsackProblem {
     }
 
     public int getOpt() {
-        this.optValues = new int[requestList.size() + 1][W + 1];
-        for(int i = 1; i <= requestList.size(); i++){
+        this.optValues = new int[requestList.size()][W + 1];
+        for(int i = 0; i < requestList.size(); i++){
             for (int w = 0; w <= W; w++) {
                 optValues[i][w] = _opt(i,w);
             }
         }
-        return this.optValues[this.requestList.size()][W];
+        printOptimalSet(requestList.size() - 1, W);
+        return this.optValues[this.requestList.size() - 1][W];
+    }
+
+    private void printOptimalSet(int i, int w) {
+        if (i == -1) return;
+        int weight = requestList.get(i).weight;
+        if (weight <= w && (weight + _opt(i - 1, w - weight)) > _opt(i - 1, w)) {
+            System.out.println(weight + " ");
+            printOptimalSet(i - 1, w - weight);
+        }
+        else {
+            printOptimalSet(i - 1, w);
+        }
     }
 
     private int _opt(int i, int w) {
-        if (i == 0) return 0;
+        if (i == -1 || w == 0) return 0;
         if (optValues[i][w] != 0) return optValues[i][w];
 
-        int currentIndexWeight = requestList.get(i - 1).weight;
+        int currentIndexWeight = requestList.get(i).weight;
         int weightExcluded = _opt(i - 1, w);
         if (currentIndexWeight > w) return weightExcluded;
         int weightIncluded =  currentIndexWeight + _opt(i - 1, w - currentIndexWeight);

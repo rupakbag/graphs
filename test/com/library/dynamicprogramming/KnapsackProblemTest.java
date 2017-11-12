@@ -12,7 +12,7 @@ public class KnapsackProblemTest {
     @Before
     public void setUp() throws Exception {
         this.req1 = new REQ(10);
-        this.req2 = new REQ(17);
+        this.req2 = new REQ(5);
         this.req3 = new REQ(7);
         this.req4 = new REQ(8);
         this.req5 = new REQ(5);
