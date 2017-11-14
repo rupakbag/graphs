@@ -3,6 +3,10 @@ package com.library.dynamicprogramming;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+* Page 271: Algorithm Design
+*/
+
 public class KnapsackProblem {
     private final int W;
     private final List<REQ> requestList;
@@ -12,6 +16,7 @@ public class KnapsackProblem {
         this.requestList = new LinkedList<>();
     }
 
+    // O(nW) :  Order of RequestList Size x Knapsack weight
     public int getOpt() {
         this.optValues = new int[requestList.size()][W + 1];
         for(int i = 0; i < requestList.size(); i++){
@@ -23,6 +28,7 @@ public class KnapsackProblem {
         return this.optValues[this.requestList.size() - 1][W];
     }
 
+    // O(n) : Order of RequestList Size
     private void printOptimalSet(int i, int w) {
         if (i == -1) return;
         int weight = requestList.get(i).weight;

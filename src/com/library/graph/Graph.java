@@ -21,7 +21,7 @@ public class Graph{
         return this;
     }
 
-    public void addEdge(Edge edge) {
+    public Graph addEdge(Edge edge) {
         if (!e.contains(edge)) {
             this.adjList.addEdge(edge.start, edge.end);
             this.v.add(edge.start);
@@ -29,6 +29,7 @@ public class Graph{
             this.e.add(edge);
             edge.end.incomingEdgeCount++;
         }
+        return this;
     }
 
     public void removeNode(Node u) {
@@ -68,6 +69,8 @@ public class Graph{
     public Set<Node> getAdjNodeList(Node u) {
         return adjList.getAdjNodeList(u);
     }
+
+    public int nodeSize() { return v == null? 0 : v.size(); }
 
     public void clear() {
         this.v.clear();

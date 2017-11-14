@@ -35,7 +35,6 @@ public class Node {
 
         Node node = (Node) o;
 
-        if (nodeId != node.nodeId) return false;
         return name.equals(node.name);
     }
 
