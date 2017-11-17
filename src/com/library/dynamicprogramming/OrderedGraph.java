@@ -56,7 +56,6 @@ public class OrderedGraph {
     }
 
     private int getIndex(Node start) {
-//        return Integer.valueOf(start.getName().substring(start.getName().indexOf("v") + 1)) - 1;
         return start.hashCode()%optValues.length;
     }
 }
