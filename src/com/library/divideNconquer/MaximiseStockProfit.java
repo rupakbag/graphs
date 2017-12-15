@@ -2,7 +2,9 @@ package com.library.divideNconquer;
 
 public class MaximiseStockProfit {
     public int getMaxProfit() {
-        return getValue(_getMaxProfit(prices, 0, prices.length -1));
+        Pair maxPair = _getMaxProfit(0, prices.length -1);
+        System.out.println("Buy @ " + prices[maxPair.min] + " Sell @ " + prices[maxPair.max]);
+        return getValue(maxPair);
     }
 
     private int[] prices;
@@ -15,19 +17,16 @@ public class MaximiseStockProfit {
         return prices[pair.max] - prices[pair.min];
     }
 
-    private Pair _getMaxProfit(int[] prices, int i, int j) {
-        if (i + 1 == j) {
+    private Pair _getMaxProfit(int i, int j) {
+        if (i + 1 == j || i == j) {
             if (prices[i] < prices[j]) return new Pair(i,j);
             return new Pair(j,i);
-        }
-        if (i == j) {
-            return new Pair(i,j);
         }
 
         int mid = i + (j - i) / 2;
 
-        Pair p1 = _getMaxProfit(prices, i, mid);
-        Pair p2 = _getMaxProfit(prices, mid + 1, j);
+        Pair p1 = _getMaxProfit(i, mid);
+        Pair p2 = _getMaxProfit(mid + 1, j);
         Pair p3 = new Pair(p1.min, p2.max);
         if (getValue(p1) > getValue(p2)) {
             return getValue(p1) > getValue(p3) ? p1 : p3;
