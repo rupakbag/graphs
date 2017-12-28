@@ -11,12 +11,12 @@ import java.util.Set;
 
 public class Dfs {
     private ArrayList<Node> nodeOrder;
-    private DirectedGraph dfsTree;
-    private DirectedGraph graph;
+    private Graph dfsTree;
+    private Graph graph;
 
-    public Dfs(DirectedGraph graph) {
+    public Dfs(Graph graph) {
         this.graph = graph;
-        this.dfsTree = new DirectedGraph();
+        this.dfsTree = new Graph(false);
         this.nodeOrder = new ArrayList<>();
     }
 
@@ -27,7 +27,7 @@ public class Dfs {
         if (adjNodes == null) return;
         for (Node n : adjNodes) {
             if (!n.visited) {
-                this.dfsTree.addEdge(Edge.getInstance(start, n));
+                this.dfsTree.addEdge(start, n);
                 generateDfs(n);
             }
         }

@@ -17,6 +17,7 @@ public class Node {
         this.nodeId = g.getNextId();
         this.name = name;
     }
+
     public static Node getInstance(String nodeName) {
         Node n = nodeCache.computeIfAbsent(nodeName, k -> new Node(k));
         return n.clear();
@@ -40,9 +41,7 @@ public class Node {
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + nodeId;
-        return result;
+        return name.hashCode();
     }
 
     @Override

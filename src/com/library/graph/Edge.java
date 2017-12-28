@@ -1,7 +1,7 @@
 package com.library.graph;
 
 import java.util.HashMap;
-
+@Deprecated
 public class Edge {
     final Node start;
     final Node end;

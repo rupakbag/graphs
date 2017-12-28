@@ -1,19 +1,16 @@
 package com.library.graph;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 public class Graph{
     Set<Node> v;
-    Set<Edge> e;
-    AdjacencyList<Node> adjList;
+    Map<Node, Set<Node>> adjList;
+    final boolean undirectedGraph;
 
-    public Graph() {
+    public Graph(boolean undirectedGraph) {
+        this.undirectedGraph = undirectedGraph;
         this.v = new HashSet<>();
-        this.e = new HashSet<>();
-        this.adjList = new AdjacencyList<>();
+        this.adjList = new HashMap<>();
     }
 
     public Graph addNode(Node u) {
@@ -21,45 +18,50 @@ public class Graph{
         return this;
     }
 
-    public Graph addEdge(Edge edge) {
-        if (!e.contains(edge)) {
-            this.adjList.addEdge(edge.start, edge.end);
-            this.v.add(edge.start);
-            this.v.add(edge.end);
-            this.e.add(edge);
-            edge.end.incomingEdgeCount++;
+    public Graph addEdge(Node s, Node e) {
+        addNode(s).addNode(e);
+        _addEdge(s, e);
+        if (undirectedGraph) {
+            _addEdge(e, s);
         }
         return this;
     }
 
-    public void removeNode(Node u) {
-        if (!v.contains(u)) return;
+    private void _addEdge(Node s, Node e) {
+        adjList.computeIfAbsent(s, k -> new HashSet<>()).add(e);
+        e.incomingEdgeCount++;
+    }
 
-        Iterator<Edge> iterator = e.iterator();
-        while (iterator.hasNext()){
-            Edge edge = iterator.next();
-            if (edge.start.equals(u) || edge.end.equals(u)) {
-                iterator.remove();
-                edge.end.incomingEdgeCount--;
-                adjList.removeEdge(edge.start, edge.end);
+    public  void removeEdge(Node s, Node e) {
+        _removeEdge(s, e);
+        if (undirectedGraph) removeEdge(e, s);
+    }
+
+    private void _removeEdge(Node s, Node e) {
+        Set<Node> adjSet = adjList.get(s);
+        if (adjSet!= null) {
+            adjSet.remove(e);
+            e.incomingEdgeCount--;
+        }
+        if (adjSet.size() == 0) adjList.remove(s); // Remove entry from Adjcency List if this is the only edge
+    }
+
+    public void removeNode(Node s) {
+        if (!this.v.remove(s)) return;
+
+        //Remove outgoing edges
+        Set<Node> adjSet = adjList.remove(s);
+        if (adjSet != null) {
+            for (Node n : adjSet) {
+                n.incomingEdgeCount--;
             }
         }
-        if (u.incomingEdgeCount == 0 && adjList.getAdjNodeList(u) == null) {
-            v.remove(u);
-        }
-    }
 
-    public  boolean removeEdge(Edge edge) {
-        if (edge != null && e.remove(edge)) {
-            edge.end.incomingEdgeCount--;
-            adjList.removeEdge(edge.start, edge.end);
-            return true;
+        //Remove incoming edges
+        for (Set<Node> set : adjList.values()){
+            set.remove(s);
         }
-        return false;
-    }
-
-    public Iterator<Edge> edgeIterator() {
-        return e == null? null : e.iterator();
+        s.clear();
     }
 
     public Iterator<Node> nodeIterator() {
@@ -67,48 +69,24 @@ public class Graph{
     }
 
     public Set<Node> getAdjNodeList(Node u) {
-        return adjList.getAdjNodeList(u);
+        return adjList.get(u);
     }
 
     public int nodeSize() { return v == null? 0 : v.size(); }
 
     public void clear() {
         this.v.clear();
-        this.e.clear();
-        this.adjList.list.clear();
+        this.adjList.clear();
     }
-    
-    public class AdjacencyList<Node> {
-        private HashMap<Node, HashSet<Node>> list;
 
-        public AdjacencyList(){
-            this.list = new HashMap<>();
-        }
-
-        boolean addEdge(Node u, Node v) {
-            HashSet<Node> list = this.list.get(u);
-            if (list == null) {
-                list = new HashSet<>();
-                this.list.put(u, list);
+    public String toString() {
+        StringBuilder sb = new StringBuilder().append("[");
+        for (Map.Entry<Node, Set<Node>> entry : adjList.entrySet()) {
+            for (Node n : entry.getValue()) {
+                sb.append(entry.getKey()).append(" -> ").append(n).append(", ");
             }
-            return list.add(v);
         }
-
-        boolean removeEdge (Node u, Node v){
-            if (u == null || v == null || !list.containsKey(u)) return false;
-            boolean success = list.get(u).remove(v);
-            if (success && list.get(u).size() == 0) {
-                list.remove(u);
-            }
-            return success;
-        }
-
-        void removeNode(Node n) {
-            list.remove(n);
-        }
-
-        public HashSet<Node> getAdjNodeList(Node u) {
-            return list.get(u);
-        }
+        String s = sb.toString();
+        return s.substring(0, s.length() - 2) + "]";
     }
 }

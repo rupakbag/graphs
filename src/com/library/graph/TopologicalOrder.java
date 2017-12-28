@@ -3,12 +3,12 @@ package com.library.graph;
 import java.util.*;
 
 public class TopologicalOrder {
-    private final DirectedGraph graph;
+    private final Graph graph;
     private ArrayList<Node> topologicalOrder;
     private HashMap<Node, Integer> incomingEdgeCount;
     private Queue<Node> active;
 
-    public TopologicalOrder(DirectedGraph graph) {
+    public TopologicalOrder(Graph graph) {
         this.graph = graph;
         active = new LinkedList<Node>();
     }

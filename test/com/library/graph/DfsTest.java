@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DfsTest {
-    private DirectedGraph graph = new DirectedGraph();
+    private Graph graph = new Graph(false);
     private Node n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13;
 
     @Before
@@ -23,17 +23,17 @@ public class DfsTest {
         n11 = Node.getInstance("n11");
         n12 = Node.getInstance("n12");
         n13 = Node.getInstance("n13");
-        graph.addEdge(Edge.getInstance(n1, n2));
-        graph.addEdge(Edge.getInstance(n1, n3));
-        graph.addEdge(Edge.getInstance(n2, n4));
-        graph.addEdge(Edge.getInstance(n2, n5));
-        graph.addEdge(Edge.getInstance(n3, n5));
-        graph.addEdge(Edge.getInstance(n3, n7));
-        graph.addEdge(Edge.getInstance(n3, n8));
-        graph.addEdge(Edge.getInstance(n5, n6));
-        graph.addEdge(Edge.getInstance(n9, n10));
-        graph.addEdge(Edge.getInstance(n11, n12));
-        graph.addEdge(Edge.getInstance(n12, n13));
+        graph.addEdge(n1, n2)
+        .addEdge(n1, n3)
+        .addEdge(n2, n4)
+        .addEdge(n2, n5)
+        .addEdge(n3, n5)
+        .addEdge(n3, n7)
+        .addEdge(n3, n8)
+        .addEdge(n5, n6)
+        .addEdge(n9, n10)
+        .addEdge(n11, n12)
+        .addEdge(n12, n13);
     }
 
     @Test

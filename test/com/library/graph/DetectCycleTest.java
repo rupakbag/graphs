@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class DetectCycleTest {
     DetectCycle dc = new DetectCycle();
-    private DirectedGraph graph = new DirectedGraph();
+    private Graph graph = new Graph(false);
     private Node n1,n2,n3,n4,n5,n6;
 
     @Before
@@ -18,13 +18,13 @@ public class DetectCycleTest {
         n5 = Node.getInstance("n5");
         n6 = Node.getInstance("n6");
 
-        graph.addEdge(Edge.getInstance(n1, n2));
-        graph.addEdge(Edge.getInstance(n2, n3));
-        graph.addEdge(Edge.getInstance(n3, n1));
-        graph.addEdge(Edge.getInstance(n2, n4));
-        graph.addEdge(Edge.getInstance(n4, n5));
-        graph.addEdge(Edge.getInstance(n5, n6));
-        graph.addEdge(Edge.getInstance(n6, n4));
+        graph.addEdge(n1, n2)
+        .addEdge(n2, n3)
+        .addEdge(n3, n1)
+        .addEdge(n2, n4)
+        .addEdge(n4, n5)
+        .addEdge(n5, n6)
+        .addEdge(n6, n4);
     }
 
     @Test

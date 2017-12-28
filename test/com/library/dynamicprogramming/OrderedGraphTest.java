@@ -1,6 +1,5 @@
 package com.library.dynamicprogramming;
 
-import com.library.graph.Edge;
 import com.library.graph.Graph;
 import com.library.graph.Node;
 import org.junit.Assert;
@@ -14,7 +13,7 @@ public class OrderedGraphTest {
 
     @Before
     public void setUp(){
-        g = new Graph();
+        g = new Graph(false);
         ogt = new OrderedGraph(g);
         v1 = Node.getInstance("v1");
         v2 = Node.getInstance("v2");
@@ -25,12 +24,12 @@ public class OrderedGraphTest {
 
     @Test
     public void longest_Path_In_Ordered_Graph(){
-        g.addEdge(Edge.getInstance(v1, v4))
-            .addEdge(Edge.getInstance(v1, v2))
-            .addEdge(Edge.getInstance(v2, v4))
-            .addEdge(Edge.getInstance(v2, v5))
-            .addEdge(Edge.getInstance(v3, v4))
-            .addEdge(Edge.getInstance(v4, v5));
+        g.addEdge(v1, v4)
+            .addEdge(v1, v2)
+            .addEdge(v2, v4)
+            .addEdge(v2, v5)
+            .addEdge(v3, v4)
+            .addEdge(v4, v5);
         Assert.assertEquals(3, ogt.getLongestPath(v1, v5));
     }
 

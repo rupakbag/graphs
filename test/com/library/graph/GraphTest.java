@@ -11,7 +11,7 @@ public class GraphTest {
 
     @Before
     public void setUp() throws Exception {
-        g = new Graph();
+        g = new Graph(false);
         n1 = Node.getInstance("n1");
         n2 = Node.getInstance("n2");
         n3 = Node.getInstance("n3");
@@ -26,34 +26,34 @@ public class GraphTest {
         g.addNode(n1).addNode(n2);
 
         assertEquals("[n1, n2]", g.v.toString());
+        assertEquals(2,g.v.size());
         assertEquals(0, n1.incomingEdgeCount);
         assertEquals(0, n2.incomingEdgeCount);
-        assertEquals(0,g.e.size());
     }
 
     @Test
     public void addEdge() throws Exception {
-        g.addEdge(Edge.getInstance(n1, n2));
-        assertEquals("[n1 -> n2]", g.e.toString());
+        g.addEdge(n1, n2);
+        assertEquals("[n1 -> n2]", g.toString());
         assertEquals("[n1, n2]", g.v.toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n1).toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n1).toString());
+        assertEquals(null, g.getAdjNodeList(n2));
         assertEquals(1, n2.incomingEdgeCount);
 
-        g.addEdge(Edge.getInstance(n3, n2));
-        assertEquals("[n1 -> n2, n3 -> n2]", g.e.toString());
+        g.addEdge(n3, n2);
+        assertEquals("[n1 -> n2, n3 -> n2]", g.toString());
         assertEquals("[n1, n2, n3]", g.v.toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n1).toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n3).toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n1).toString());
+        assertEquals("[n2]", g.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n2));
         assertEquals(2, n2.incomingEdgeCount);
 
-        g.addEdge(Edge.getInstance(n3, n1));
-        assertEquals("[n1 -> n2, n3 -> n2, n3 -> n1]", g.e.toString());
+        g.addEdge(n3, n1);
+        assertEquals("[n1 -> n2, n3 -> n2, n3 -> n1]", g.toString());
         assertEquals("[n1, n2, n3]", g.v.toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n1).toString());
-        assertEquals("[n2, n1]", g.adjList.getAdjNodeList(n3).toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n1).toString());
+        assertEquals("[n2, n1]", g.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n2));
         assertEquals(2, n2.incomingEdgeCount);
         assertEquals(1, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);
@@ -61,28 +61,25 @@ public class GraphTest {
 
     @Test
     public void removeEdge() throws Exception {
-        g.addEdge(Edge.getInstance(n1, n2));
-        g.addEdge(Edge.getInstance(n3, n2));
-        g.addEdge(Edge.getInstance(n3, n1));
-
-        assertEquals(true, g.removeEdge(Edge.getInstance(n3, n2)));
-        assertEquals("[n1 -> n2, n3 -> n1]", g.e.toString());
+        g.addEdge(n1, n2);
+        g.addEdge(n3, n2);
+        g.addEdge(n3, n1);
+        g.removeEdge(n3, n2);
+        assertEquals("[n1 -> n2, n3 -> n1]", g.toString());
         assertEquals("[n1, n2, n3]", g.v.toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n1).toString());
-        assertEquals("[n1]", g.adjList.getAdjNodeList(n3).toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n1).toString());
+        assertEquals("[n1]", g.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n2));
         assertEquals(1, n2.incomingEdgeCount);
         assertEquals(1, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);
 
-        assertEquals(false, g.removeEdge(Edge.getInstance(n2, n1)));
-
-        assertEquals(true, g.removeEdge(Edge.getInstance(n1, n2)));
-        assertEquals("[n3 -> n1]", g.e.toString());
+        g.removeEdge(n1, n2);
+        assertEquals("[n3 -> n1]", g.toString());
         assertEquals("[n1, n2, n3]", g.v.toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n1));
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
-        assertEquals("[n1]", g.adjList.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n1));
+        assertEquals(null, g.getAdjNodeList(n2));
+        assertEquals("[n1]", g.getAdjNodeList(n3).toString());
         assertEquals(0, n2.incomingEdgeCount);
         assertEquals(1, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);
@@ -90,37 +87,37 @@ public class GraphTest {
 
     @Test
     public void removeNode() throws Exception {
-        g.addEdge(Edge.getInstance(n1, n2));
-        g.addEdge(Edge.getInstance(n3, n2));
-        g.addEdge(Edge.getInstance(n3, n1));
+        g.addEdge(n1, n2);
+        g.addEdge(n3, n2);
+        g.addEdge(n3, n1);
 
         g.removeNode(n1);
-        assertEquals("[n3 -> n2]", g.e.toString());
+        assertEquals("[n3 -> n2]", g.toString());
         assertEquals("[n2, n3]", g.v.toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n1));
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n1));
+        assertEquals(null, g.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n3).toString());
         assertEquals(1, n2.incomingEdgeCount);
         assertEquals(0, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);
 
-        g.addEdge(Edge.getInstance(n1, n2));
-        g.addEdge(Edge.getInstance(n3, n1));
-        assertEquals("[n3 -> n2, n1 -> n2, n3 -> n1]", g.e.toString());
+        g.addEdge(n1, n2);
+        g.addEdge(n3, n1);
+        assertEquals("[n3 -> n2, n1 -> n2, n3 -> n1]", g.toString());
         assertEquals("[n2, n3, n1]", g.v.toString());
-        assertEquals("[n2]", g.adjList.getAdjNodeList(n1).toString());
-        assertEquals("[n2, n1]", g.adjList.getAdjNodeList(n3).toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
+        assertEquals("[n2]", g.getAdjNodeList(n1).toString());
+        assertEquals("[n2, n1]", g.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n2));
         assertEquals(2, n2.incomingEdgeCount);
         assertEquals(1, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);
 
         g.removeNode(n2);
-        assertEquals("[n3 -> n1]", g.e.toString());
+        assertEquals("[n3 -> n1]", g.toString());
         assertEquals("[n3, n1]", g.v.toString());
-        assertEquals(null, g.adjList.getAdjNodeList(n1));
-        assertEquals(null, g.adjList.getAdjNodeList(n2));
-        assertEquals("[n1]", g.adjList.getAdjNodeList(n3).toString());
+        assertEquals(null, g.getAdjNodeList(n1));
+        assertEquals(null, g.getAdjNodeList(n2));
+        assertEquals("[n1]", g.getAdjNodeList(n3).toString());
         assertEquals(0, n2.incomingEdgeCount);
         assertEquals(1, n1.incomingEdgeCount);
         assertEquals(0, n3.incomingEdgeCount);

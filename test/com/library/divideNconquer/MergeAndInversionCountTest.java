@@ -9,7 +9,7 @@ public class MergeAndInversionCountTest {
     @Test
     public void test1() {
         int[] input = new int[] {3,2,1};
-        Assert.assertEquals(6, MergeAndInversionCount.getInversion(input));
+        Assert.assertEquals(3, MergeAndInversionCount.getInversion(input));
         System.out.println(Arrays.toString(input));
     }
 }

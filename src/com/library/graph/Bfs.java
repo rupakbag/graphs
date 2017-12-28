@@ -8,13 +8,13 @@ import java.util.*;
 * BFS generates connected component of the starting node
 */
 public class Bfs {
-    private final DirectedGraph graph;
-    private final DirectedGraph bfsTree;
+    private final Graph graph;
+    private final Graph bfsTree;
     private final ArrayList<ArrayList<Node>> bfsLevel;
 
-    public Bfs(DirectedGraph graph) {
+    public Bfs(Graph graph) {
         this.graph = graph;
-        this.bfsTree = new DirectedGraph();
+        this.bfsTree = new Graph(false);
         this.bfsLevel = new ArrayList<>();
     }
 
@@ -35,7 +35,7 @@ public class Bfs {
                 if (adjNode.visited) continue;
                 adjNode.visited = true;
                 list.add(adjNode);
-                this.bfsTree.addEdge(Edge.getInstance(node, adjNode));
+                this.bfsTree.addEdge(node, adjNode);
             }
         }
         if (list.size() > 0) {

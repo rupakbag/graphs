@@ -1,7 +1,7 @@
 package com.library.graph;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Set;
 
 public class DetectCycle {
 
@@ -25,7 +25,7 @@ public class DetectCycle {
             return path;
         }
         n.visited= true;
-        HashSet<Node> nAdjSet = g.adjList.getAdjNodeList(n);
+        Set<Node> nAdjSet = g.getAdjNodeList(n);
         if (nAdjSet == null) return path;
         for (Node nAdj : nAdjSet) {
             getCycle(nAdj, path + " " + nAdj.name);
