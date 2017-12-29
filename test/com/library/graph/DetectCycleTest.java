@@ -18,17 +18,17 @@ public class DetectCycleTest {
         n5 = Node.getInstance("n5");
         n6 = Node.getInstance("n6");
 
-        graph.addEdge(n1, n2)
-        .addEdge(n2, n3)
-        .addEdge(n3, n1)
-        .addEdge(n2, n4)
-        .addEdge(n4, n5)
-        .addEdge(n5, n6)
-        .addEdge(n6, n4);
     }
 
     @Test
     public void printCycle() {
+        graph.addEdge(n1, n2)
+                .addEdge(n2, n3)
+                .addEdge(n3, n1)
+                .addEdge(n2, n4)
+                .addEdge(n4, n5)
+                .addEdge(n5, n6)
+                .addEdge(n6, n2);
         Assert.assertEquals(2, dc.printCycle(graph, n1));
     }
 }

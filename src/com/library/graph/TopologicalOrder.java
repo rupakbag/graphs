@@ -13,35 +13,28 @@ public class TopologicalOrder {
         active = new LinkedList<Node>();
     }
 
-    public void generateTopologicalOrder() {
-        if (graph == null) return;
-        this.topologicalOrder = new ArrayList<>();
-
-        getActiveNodes();
-        processActiveNodes();
-        System.out.println(topologicalOrder.toString());
-    }
-
-    private void processActiveNodes() {
-        if (active.isEmpty()) return;
-        Node n = active.remove();
-        topologicalOrder.add(n);
-        graph.removeNode(n);
-        getActiveNodes();
-        processActiveNodes();
-    }
-
-    private void getActiveNodes() {
-        for (Node n : graph.v) {
-            if (n.incomingEdgeCount == 0 && !n.visited) {
-                active.add(n);
-                n.visited = true;
+    public static String getTopologicalOrder(Graph g) {
+        StringBuilder sb = new StringBuilder().append("[");
+        //Find Set of non incoming edge nodes
+        Queue<Node> noIncoming = new LinkedList<>();
+        for (Node n : g.v) {
+            if (n.incomingEdgeCount == 0) noIncoming.add(n);
+        }
+        int nodeCount = 0;
+        while(!noIncoming.isEmpty()) {
+            Node n = noIncoming.remove();
+            sb.append(n).append(", ");
+            nodeCount++;
+            Set<Node> adjNodeList = g.getAdjNodeList(n);
+            if (adjNodeList == null) continue;
+            for (Node adjNode : adjNodeList) {
+                if (--adjNode.incomingEdgeCount == 0) {
+                    noIncoming.add(adjNode);
+                }
             }
         }
-    }
 
-    public String getTopologicalOrder() {
-        generateTopologicalOrder();
-        return topologicalOrder.toString();
+        String s = sb.toString();
+        return (nodeCount == g.nodeSize()) ? s.substring(0, s.length() - 2) + "]" : "[]";
     }
 }

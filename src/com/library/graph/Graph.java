@@ -3,8 +3,8 @@ package com.library.graph;
 import java.util.*;
 
 public class Graph{
-    Set<Node> v;
-    Map<Node, Set<Node>> adjList;
+    final Set<Node> v;
+    final Map<Node, Set<Node>> adjList;
     final boolean undirectedGraph;
 
     public Graph(boolean undirectedGraph) {
@@ -46,6 +46,7 @@ public class Graph{
         if (adjSet.size() == 0) adjList.remove(s); // Remove entry from Adjcency List if this is the only edge
     }
 
+    // O(n) operation Avoid!!!
     public void removeNode(Node s) {
         if (!this.v.remove(s)) return;
 
@@ -58,21 +59,25 @@ public class Graph{
         }
 
         //Remove incoming edges
-        for (Set<Node> set : adjList.values()){
-            set.remove(s);
+        if (s.incomingEdgeCount != 0) {
+            for (Set<Node> set : adjList.values()) {
+                set.remove(s);
+            }
         }
         s.clear();
     }
 
     public Iterator<Node> nodeIterator() {
-        return v == null? null : v.iterator();
+        return v.iterator();
     }
 
     public Set<Node> getAdjNodeList(Node u) {
         return adjList.get(u);
     }
 
-    public int nodeSize() { return v == null? 0 : v.size(); }
+    public int nodeSize() {
+        return v.size();
+    }
 
     public void clear() {
         this.v.clear();

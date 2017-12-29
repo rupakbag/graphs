@@ -17,24 +17,34 @@ public class TopologicalOrderTest {
         n5 = Node.getInstance("n5");
         n6 = Node.getInstance("n6");
         n7 = Node.getInstance("n7");
-
-        graph.addEdge(n1, n4)
-            .addEdge(n1, n5)
-            .addEdge(n1, n7)
-            .addEdge(n2, n6)
-            .addEdge(n2, n5)
-            .addEdge(n2, n3)
-            .addEdge(n3, n4)
-            .addEdge(n3, n5)
-            .addEdge(n4, n5)
-            .addEdge(n5, n6)
-            .addEdge(n5, n7)
-            .addEdge(n6, n7);
     }
 
     @Test
     public void printTopologicalOrder() {
-        TopologicalOrder to = new TopologicalOrder(graph);
-        Assert.assertEquals("[n1, n2, n3, n4, n5, n6, n7]", to.getTopologicalOrder());
+        graph.addEdge(n1, n4)
+                .addEdge(n1, n5)
+                .addEdge(n1, n7)
+                .addEdge(n2, n6)
+                .addEdge(n2, n5)
+                .addEdge(n2, n3)
+                .addEdge(n3, n4)
+                .addEdge(n3, n5)
+                .addEdge(n4, n5)
+                .addEdge(n5, n6)
+                .addEdge(n5, n7)
+                .addEdge(n6, n7);
+        Assert.assertEquals("[n1, n2, n3, n4, n5, n6, n7]", TopologicalOrder.getTopologicalOrder(graph));
+    }
+
+    @Test
+    public void no_topological_order() {
+        graph.addEdge(n1, n2).addEdge(n2, n3).addEdge(n3, n1);
+        Assert.assertEquals("[]", TopologicalOrder.getTopologicalOrder(graph));
+    }
+
+    @Test
+    public void partial_topological_order() {
+        graph.addEdge(n1, n2).addEdge(n2, n3).addEdge(n3, n4).addEdge(n4, n2);
+        Assert.assertEquals("[]", TopologicalOrder.getTopologicalOrder(graph));
     }
 }
