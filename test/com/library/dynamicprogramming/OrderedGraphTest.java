@@ -13,7 +13,7 @@ public class OrderedGraphTest {
 
     @Before
     public void setUp(){
-        g = new Graph(false);
+        g = Graph.getDirectedGraphInstance();
         ogt = new OrderedGraph(g);
         v1 = Node.getInstance("v1");
         v2 = Node.getInstance("v2");

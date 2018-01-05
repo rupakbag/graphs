@@ -14,7 +14,7 @@ public class Bfs {
 
     public Bfs(Graph graph) {
         this.graph = graph;
-        this.bfsTree = new Graph(false);
+        this.bfsTree = Graph.getDirectedGraphInstance();
         this.bfsLevel = new ArrayList<>();
     }
 

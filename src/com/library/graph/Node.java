@@ -9,6 +9,8 @@ public class Node {
     final int nodeId;
     int incomingEdgeCount = 0;
     boolean visited;
+    Object satDataRefHolder;
+
     private static Map<String, Node> nodeCache = new HashMap<>();
 
     private static IdGenerator g = IdGenerator.getInstance();

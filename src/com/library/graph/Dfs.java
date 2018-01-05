@@ -16,7 +16,7 @@ public class Dfs {
 
     public Dfs(Graph graph) {
         this.graph = graph;
-        this.dfsTree = new Graph(false);
+        this.dfsTree = Graph.getDirectedGraphInstance();
         this.nodeOrder = new ArrayList<>();
     }
 

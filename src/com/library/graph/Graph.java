@@ -7,7 +7,15 @@ public class Graph{
     final Map<Node, Set<Node>> adjList;
     final boolean undirectedGraph;
 
-    public Graph(boolean undirectedGraph) {
+    public static Graph getUndirectedGraphInstance() {
+        return new Graph(true);
+    }
+
+    public static Graph getDirectedGraphInstance() {
+        return new Graph(false);
+    }
+
+    private Graph(boolean undirectedGraph) {
         this.undirectedGraph = undirectedGraph;
         this.v = new HashSet<>();
         this.adjList = new HashMap<>();
@@ -60,8 +68,11 @@ public class Graph{
 
         //Remove incoming edges
         if (s.incomingEdgeCount != 0) {
-            for (Set<Node> set : adjList.values()) {
+            Iterator<Set<Node>> i = adjList.values().iterator();
+            while (i.hasNext()) {
+                Set<Node> set = i.next();
                 set.remove(s);
+                if (set.isEmpty()) i.remove();
             }
         }
         s.clear();

@@ -13,8 +13,9 @@ public class TopologicalOrder {
         active = new LinkedList<Node>();
     }
 
+    //O(m+n)
     public static String getTopologicalOrder(Graph g) {
-        StringBuilder sb = new StringBuilder().append("[");
+        List<Node> order = new LinkedList<>();
         //Find Set of non incoming edge nodes
         Queue<Node> noIncoming = new LinkedList<>();
         for (Node n : g.v) {
@@ -23,7 +24,7 @@ public class TopologicalOrder {
         int nodeCount = 0;
         while(!noIncoming.isEmpty()) {
             Node n = noIncoming.remove();
-            sb.append(n).append(", ");
+            order.add(n);
             nodeCount++;
             Set<Node> adjNodeList = g.getAdjNodeList(n);
             if (adjNodeList == null) continue;
@@ -34,7 +35,10 @@ public class TopologicalOrder {
             }
         }
 
-        String s = sb.toString();
+        if (order.size() < g.nodeSize()) { //No DAG, find Cycle
+//            DetectCycle
+        }
+        String s = ""; //sb.toString();
         return (nodeCount == g.nodeSize()) ? s.substring(0, s.length() - 2) + "]" : "[]";
     }
 }

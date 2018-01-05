@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TopologicalOrderTest {
-    private Graph graph = new Graph(false);
+    private Graph graph = Graph.getDirectedGraphInstance();
     private Node n1,n2,n3,n4,n5,n6,n7;
 
     @Before
@@ -20,7 +20,7 @@ public class TopologicalOrderTest {
     }
 
     @Test
-    public void printTopologicalOrder() {
+    public void printTopologicalOrder1() {
         graph.addEdge(n1, n4)
                 .addEdge(n1, n5)
                 .addEdge(n1, n7)
@@ -34,6 +34,12 @@ public class TopologicalOrderTest {
                 .addEdge(n5, n7)
                 .addEdge(n6, n7);
         Assert.assertEquals("[n1, n2, n3, n4, n5, n6, n7]", TopologicalOrder.getTopologicalOrder(graph));
+    }
+
+    @Test
+    public void printTopologicalOrder2() {
+        graph.addEdge(n1, n2).addEdge(n2, n3).addEdge(n2, n4).addEdge(n4, n3);
+        Assert.assertEquals("[n1, n2, n4, n3]", TopologicalOrder.getTopologicalOrder(graph));
     }
 
     @Test

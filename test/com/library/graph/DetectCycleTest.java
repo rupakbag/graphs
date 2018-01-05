@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class DetectCycleTest {
     DetectCycle dc = new DetectCycle();
-    private Graph graph = new Graph(false);
+    private Graph graph = Graph.getDirectedGraphInstance();
     private Node n1,n2,n3,n4,n5,n6;
 
     @Before
@@ -28,7 +28,7 @@ public class DetectCycleTest {
                 .addEdge(n2, n4)
                 .addEdge(n4, n5)
                 .addEdge(n5, n6)
-                .addEdge(n6, n2);
+                .addEdge(n6, n4);
         Assert.assertEquals(2, dc.printCycle(graph, n1));
     }
 }
