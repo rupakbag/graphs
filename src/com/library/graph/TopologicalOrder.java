@@ -25,6 +25,7 @@ public class TopologicalOrder {
         while(!noIncoming.isEmpty()) {
             Node n = noIncoming.remove();
             order.add(n);
+            n.visited = true;
             nodeCount++;
             Set<Node> adjNodeList = g.getAdjNodeList(n);
             if (adjNodeList == null) continue;
@@ -36,9 +37,8 @@ public class TopologicalOrder {
         }
 
         if (order.size() < g.nodeSize()) { //No DAG, find Cycle
-//            DetectCycle
+            return "[]";
         }
-        String s = ""; //sb.toString();
-        return (nodeCount == g.nodeSize()) ? s.substring(0, s.length() - 2) + "]" : "[]";
+        return order.toString();
     }
 }
