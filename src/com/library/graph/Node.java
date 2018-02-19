@@ -8,8 +8,8 @@ public class Node {
 
     final int nodeId;
     int incomingEdgeCount = 0;
-    boolean visited;
-    Object satDataRefHolder;
+    public boolean visited;
+    public Object satDataRefHolder;
 
     private static Map<String, Node> nodeCache = new HashMap<>();
 

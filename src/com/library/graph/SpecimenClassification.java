@@ -14,7 +14,7 @@ public class SpecimenClassification {
     }
 
     public static boolean isConsistent(Set<Pair> judgements) {
-        WeightedGraph wg = new WeightedGraph(true);
+        WeightedGraph wg = WeightedGraph.getUndirectedGraphInstance();
         for (Pair p : judgements) {
             wg.addEdge(Node.getInstance(p.a), Node.getInstance(p.b), (p.sameSpecimen? 1 : -1));
         }

@@ -7,7 +7,15 @@ public class WeightedGraph {
     final Map<Node, Set<Edge>> adjList;
     final boolean undirectedGraph;
 
-    public WeightedGraph(boolean undirectedGraph) {
+    public static WeightedGraph getUndirectedGraphInstance() {
+        return new WeightedGraph(true);
+    }
+
+    public static WeightedGraph getDirectedGraphInstance() {
+        return new WeightedGraph(false);
+    }
+
+    private WeightedGraph(boolean undirectedGraph) {
         this.undirectedGraph = undirectedGraph;
         this.v = new HashSet<>();
         this.adjList = new HashMap<>();
@@ -28,7 +36,7 @@ public class WeightedGraph {
     }
 
     private void _addEdge(Node s, Node e, int w) {
-        adjList.computeIfAbsent(s, k -> new HashSet<>()).add(new Edge(e, w));
+        adjList.computeIfAbsent(s, k -> new HashSet<>()).add(new Edge(s, e, w));
         e.incomingEdgeCount++;
     }
 
@@ -40,7 +48,7 @@ public class WeightedGraph {
     private void _removeEdge(Node s, Node e) {
         Set<Edge> adjSet = adjList.get(s);
         if (adjSet!= null) {
-            adjSet.remove(new Edge(e));
+            adjSet.remove(new Edge(s, e));
             e.incomingEdgeCount--;
         }
         if (adjSet.size() == 0) adjList.remove(s); // Remove entry from Adjcency List if this is the only edge
@@ -59,11 +67,11 @@ public class WeightedGraph {
         }
 
         //Remove incoming edges
-        if (s.incomingEdgeCount != 0) {
+        if (s.incomingEdgeCount > 0) {
             Iterator<Map.Entry<Node, Set<Edge>>> i = adjList.entrySet().iterator();
             while (i.hasNext()){
                 Map.Entry<Node, Set<Edge>> entry = i.next();
-                entry.getValue().remove(new Edge(s));
+                entry.getValue().remove(new Edge(entry.getKey(), s));
                 if (entry.getValue().size() == 0) {
                     i.remove();
                 }
@@ -100,16 +108,19 @@ public class WeightedGraph {
         return s.substring(0, s.length() - 2) + "]";
     }
 
-    class Edge {
-        final Node end;
-        final int weight;
+    static public class Edge {
+        public final Node start;
+        public final Node end;
+        public final int weight;
 
-        public Edge(Node end) {
+        public Edge(Node start, Node end) {
+            this.start = start;
             this.end = end;
             this.weight = 0;
         }
 
-        private Edge(Node end, int weight) {
+        public Edge(Node start, Node end, int weight) {
+            this.start = start;
             this.end = end;
             this.weight = weight;
         }
@@ -121,12 +132,15 @@ public class WeightedGraph {
 
             Edge edge = (Edge) o;
 
+            if (!start.equals(edge.start)) return false;
             return end.equals(edge.end);
         }
 
         @Override
         public int hashCode() {
-            return end.hashCode();
+            int result = start.hashCode();
+            result = 31 * result + end.hashCode();
+            return result;
         }
 
         @Override
