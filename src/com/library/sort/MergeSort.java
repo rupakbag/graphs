@@ -3,6 +3,9 @@ package com.library.sort;
 import java.util.Arrays;
 import java.util.Comparator;
 
+//O(nlogn) time complexity all cases since data is partitioned into 2 equal sizes if size is a power of 2
+//O(n) space complexity because of merge
+//Stable sort
 public class MergeSort {
     public static <T extends Comparable<T>> void sort(T[] s) {
         if (s.length == 1) return;
@@ -16,7 +19,7 @@ public class MergeSort {
         merge(s1, s2, s);
     }
 
-    public static <T extends Comparable<T>> void merge(T[] s1, T[] s2, T[] s3) {
+    protected static <T extends Comparable<T>> void merge(T[] s1, T[] s2, T[] s3) {
         int s1Index = 0;
         int s2Index = 0;
 

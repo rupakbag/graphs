@@ -1,5 +1,10 @@
 package com.library.sort;
 
+//O(n+m); where n is number of elements and m is the number of inversions
+//O(n^2) Worst Case
+//Takes advantage of any data elements that is already in sorted order
+// Use for small dataset size < 50.
+
 public class InsertionSort {
     public static void sort(int[] data){
         int c = 1;
