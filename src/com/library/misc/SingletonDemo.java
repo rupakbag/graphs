@@ -1,4 +1,4 @@
-package com.leetcode;
+package com.library.misc;
 
 import java.io.Serializable;
 

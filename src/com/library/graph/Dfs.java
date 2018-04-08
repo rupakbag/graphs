@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Set;
 /*
 * Running time complexity O(m + n) since it uses graph implemented as an adjacency list
-* Every entry in the adjacency list is visited only once to generate DFS
+* Every entry in the adjacency list is visited only once to generate dfs
 * Weaker bound is O(n^2)
-* DFS generates connected component of the starting node
+* dfs generates connected component of the starting node
 */
 
 public class Dfs {

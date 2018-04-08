@@ -23,9 +23,9 @@ public class Dijkstra {
         s.visited = true;
 
         while (retGraph.nodeSize() < dg.nodeSize()) {
-            Set<Edge> adjEdges = dg.getAdjNodeList(s);
+            Set<Edge> adjEdges = dg.getAdjEdgeList(s);
             if (adjEdges != null) {
-                for (Edge e : dg.getAdjNodeList(s)) {
+                for (Edge e : dg.getAdjEdgeList(s)) {
                     if (e.end.visited) continue;
                     pq.add(new Edge(s, e.end, e.weight + ((Integer) s.satDataRefHolder).intValue()));
                 }

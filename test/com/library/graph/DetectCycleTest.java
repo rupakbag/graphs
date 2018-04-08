@@ -21,7 +21,15 @@ public class DetectCycleTest {
     }
 
     @Test
-    public void printCycle() {
+    public void test_simple_cycle() {
+        graph.addEdge(n1, n2)
+                .addEdge(n2, n3)
+                .addEdge(n3, n1);
+        Assert.assertEquals(1, dc.printCycle(graph, n1));
+    }
+
+    @Test
+    public void test_multiple_cycle() {
         graph.addEdge(n1, n2)
                 .addEdge(n2, n3)
                 .addEdge(n3, n1)
@@ -31,4 +39,36 @@ public class DetectCycleTest {
                 .addEdge(n6, n4);
         Assert.assertEquals(2, dc.printCycle(graph, n1));
     }
+
+    @Test
+    public void test_no_cycle() {
+        graph.addEdge(n1, n2)
+                .addEdge(n2, n3)
+                .addEdge(n1, n3);
+        Assert.assertEquals(0, dc.printCycle(graph, n1));
+    }
+
+    @Test
+    public void test_no_cycle1() {
+        graph.addEdge(n1, n2)
+                .addEdge(n1, n4)
+                .addEdge(n2, n3)
+                .addEdge(n2, n5)
+                .addEdge(n4, n5);
+        Assert.assertEquals(0, dc.printCycle(graph, n1));
+    }
+
+    @Test
+    public void test_undirected_graph_cycle() {
+        Graph g = Graph.getUndirectedGraphInstance();
+        g.addEdge(n1, n2)
+                .addEdge(n1, n5)
+                .addEdge(n2, n3)
+                .addEdge(n2, n4)
+                .addEdge(n4, n5)
+                .addEdge(n5,n6);
+        Assert.assertEquals(1, dc.printCycle(g, n1));
+    }
+
+
 }

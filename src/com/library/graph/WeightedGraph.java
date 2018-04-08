@@ -88,7 +88,7 @@ public class WeightedGraph {
         return v.size();
     }
 
-    public Set<Edge> getAdjNodeList(Node u) {
+    public Set<Edge> getAdjEdgeList(Node u) {
         return adjList.get(u);
     }
 

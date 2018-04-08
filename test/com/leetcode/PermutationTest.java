@@ -29,4 +29,16 @@ public class PermutationTest {
         Assert.assertEquals("[abcd, abdc, acbd, acdb, adcb, adbc, bacd, badc, bcad, bcda, bdca, bdac, cbad, cbda, cabd, cadb, cdab, cdba, dbca, dbac, dcba, dcab, dacb, dabc]",
                 Permutation.permute("abcd", 4).toString());
     }
+
+    @Test
+    public void test5(){
+        Assert.assertEquals("[abcd, abdc, acbd, acdb, adcb, adbc, bacd, badc, bcad, bcda, bdca, bdac, cbad, cbda, cabd, cadb, cdab, cdba, dbca, dbac, dcba, dcab, dacb, dabc]",
+                Permutation.permute("abaa", 3).toString());
+    }
+
+    @Test
+    public void test6(){
+        Assert.assertEquals("[ab, ac, ba, bc, cb, ca]", Permutation.permute("abaa", 4).toString());
+    }
+
 }

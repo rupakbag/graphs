@@ -1,47 +1,38 @@
 package com.library.divideNconquer;
 
+// Algo Design Book Solved Exercise 2 (Page 244)
+// T(n) = 2 T(n/2) + O(n) => O(nlogn)
 public class MaximiseStockProfit {
-    public int getMaxProfit() {
-        Pair maxPair = _getMaxProfit(0, prices.length -1);
-        System.out.println("Buy @ " + prices[maxPair.min] + " Sell @ " + prices[maxPair.max]);
-        return getValue(maxPair);
+    public static int getMaxProfit(int[] prices) {
+        if (prices.length == 0) return 0;
+        return _getMaxProfit(prices, 0, prices.length - 1);
     }
 
-    private int[] prices;
+    private static int _getMaxProfit(int[] prices, int i, int j) {
+        if (i == j) return 0;
 
-    public MaximiseStockProfit(int[] prices) {
-        this.prices = prices;
+        int mid = i + ((j - i)/2);
+
+        int p1 = _getMaxProfit(prices, i, mid);
+        int p2 = _getMaxProfit(prices, mid + 1, j);
+        int p3 = getMax(prices, mid + 1, j) - getMin(prices, i, mid);
+
+        return (Math.max(p1, Math.max(p2, p3)));
     }
 
-    private int getValue(Pair pair) {
-        return prices[pair.max] - prices[pair.min];
-    }
-
-    private Pair _getMaxProfit(int i, int j) {
-        if (i + 1 == j || i == j) {
-            if (prices[i] < prices[j]) return new Pair(i,j);
-            return new Pair(j,i);
+    private static int getMin(int[] prices, int i, int j) {
+        int ret = prices[i];
+        for (int k = i + 1; k <= j; k++) {
+            if (ret > prices[k]) ret = prices[k];
         }
-
-        int mid = i + (j - i) / 2;
-
-        Pair p1 = _getMaxProfit(i, mid);
-        Pair p2 = _getMaxProfit(mid + 1, j);
-        Pair p3 = new Pair(p1.min, p2.max);
-        if (getValue(p1) > getValue(p2)) {
-            return getValue(p1) > getValue(p3) ? p1 : p3;
-        } else {
-            return getValue(p2) > getValue(p3) ? p2 : p3;
-        }
+        return ret;
     }
 
-    private class Pair {
-        int min;
-        int max;
-
-        public Pair(int min, int max) {
-            this.min = min;
-            this.max = max;
+    private static int getMax(int[] prices, int i, int j) {
+        int ret = prices[i];
+        for (int k = i + 1; k <= j; k++) {
+            if (ret < prices[k]) ret = prices[k];
         }
+        return ret;
     }
 }

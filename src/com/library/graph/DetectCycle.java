@@ -1,40 +1,42 @@
 package com.library.graph;
 
-import java.util.HashMap;
 import java.util.Set;
 
 public class DetectCycle {
-
-    HashMap<Node, String> pathMap = new HashMap<>();
     Graph g;
     int cycleCount = 0;
     /*
     * This method returns the number of cycles found in the graph. Also prints the list of nodes that form each cycle
     * Returns 0 if no cycle exists
+    * Bug: If start node doesn't lead to cycle, no cycle is detected. Remove dependency on start node
      */
     public int printCycle(Graph g, Node start) {
         this.g = g;
-        getCycle(start, start.name);
+        getCycle(start, null, "");
         return cycleCount;
     }
 
-    private String getCycle(Node n, String path) {
+    private void getCycle(Node n, Node prevNode, String path) {
         if (n.visited) {
-            System.out.println("Cycle Found: " + filterPath(path));
-            cycleCount++;
-            return path;
+            if (path.contains(n.getName())) {
+                System.out.println("Cycle Found: " + filterPath(path, n) + " " + n.getName());
+                cycleCount++;
+            }
+            return;
         }
+
         n.visited= true;
+        path += " " + n.getName();
         Set<Node> nAdjSet = g.getAdjNodeList(n);
-        if (nAdjSet == null) return path;
+        if (nAdjSet == null) return;
         for (Node nAdj : nAdjSet) {
-            getCycle(nAdj, path + " " + nAdj.name);
+            if (nAdj != prevNode) {
+                getCycle(nAdj, n, path);
+            }
         }
-        return path;
     }
 
-    private String filterPath(String path) {
-        String lastNode = path.substring(path.lastIndexOf(" ") + 1);
-        return path.substring(path.indexOf(lastNode));
+    private String filterPath(String path, Node n) {
+        return path.substring(path.indexOf(n.toString()));
     }
 }

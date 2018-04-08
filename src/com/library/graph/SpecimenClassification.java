@@ -31,7 +31,7 @@ public class SpecimenClassification {
 
         while (list.size() > 0) {
             Node n = list.remove();
-            Set<WeightedGraph.Edge> adjEdges = wg.getAdjNodeList(n);
+            Set<WeightedGraph.Edge> adjEdges = wg.getAdjEdgeList(n);
             if (adjEdges == null) {
                 continue;
             }
