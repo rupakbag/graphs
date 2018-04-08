@@ -1,4 +1,4 @@
-package foursquare;
+package fivesquare;
 
 import java.io.*;
 import java.util.ArrayList;
